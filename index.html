@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>منصة ويب متقدمة</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- شريط علوي -->
+  <header class="topbar">
+    <div class="brand">منصة الويب المتقدمة</div>
+    <nav class="nav">
+      <button class="nav-btn" data-view="home">الرئيسية</button>
+      <button class="nav-btn" data-view="media">الوسائط</button>
+      <button class="nav-btn" data-view="forms">الفورمات</button>
+      <button class="nav-btn" data-view="table">الجداول</button>
+      <button class="nav-btn" data-view="embed">تضمين خارجي</button>
+      <button class="nav-btn" data-view="about">عن الموقع</button>
+    </nav>
+    <div class="user-controls">
+      <span id="user-status">غير مسجل</span>
+      <button id="openLogin">تسجيل الدخول</button>
+      <button id="logout" class="hidden">تسجيل الخروج</button>
+    </div>
+  </header>
+
+  <!-- مساحة التنبيهات -->
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- الحاوية الرئيسية -->
+  <main id="app">
+    <!-- الصفحة: الرئيسية -->
+    <section id="view-home" class="view active">
+      <h1>مرحبا!</h1>
+      <p>هذا نموذج موقع ويب متقدم يدعم: تسجيل الدخول، حفظ الجلسات، إدارة الوسائط، الجداول، الفورمات، والروابط والتضمين من مواقع أخرى.</p>
+      <div class="cards">
+        <div class="card"><h3>الجلسات</h3><p>حفظ الحالة باستخدام LocalStorage.</p></div>
+        <div class="card"><h3>الوسائط</h3><p>صور وفيديوهات مرفوعة محليًا ومضمنة خارجيًا.</p></div>
+        <div class="card"><h3>الجداول</h3><p>إضافة/تعديل/حذف سجلات.</p></div>
+      </div>
+    </section>
+
+    <!-- الصفحة: الوسائط (صور + فيديو) -->
+    <section id="view-media" class="view">
+      <h2>إدارة الوسائط</h2>
+
+      <div class="media-grid">
+        <!-- رفع صورة وعرضها -->
+        <div class="panel">
+          <h3>رفع صورة وعرضها</h3>
+          <input type="file" id="imageInput" accept="image/*" />
+          <div class="preview">
+            <img id="imagePreview" alt="معاينة الصورة" />
+          </div>
+        </div>
+
+        <!-- رفع فيديو وعرضه -->
+        <div class="panel">
+          <h3>رفع فيديو وعرضه</h3>
+          <input type="file" id="videoInput" accept="video/*" />
+          <video id="videoPreview" controls></video>
+        </div>
+
+        <!-- تضمين فيديو خارجي -->
+        <div class="panel">
+          <h3>تضمين فيديو من YouTube</h3>
+          <input type="text" id="ytUrl" placeholder="ضع رابط يوتيوب"/>
+          <button id="embedYt">تضمين</button>
+          <div class="embed-box">
+            <iframe id="ytFrame" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- الصفحة: الفورمات -->
+    <section id="view-forms" class="view">
+      <h2>نماذج متقدمة</h2>
+
+      <form id="profileForm" class="form-card">
+        <h3>نموذج ملف شخصي</h3>
+        <label>الاسم الكامل
+          <input type="text" name="fullName" required />
+        </label>
+        <label>البريد الإلكتروني
+          <input type="email" name="email" required />
+        </label>
+        <label>رقم الهاتف
+          <input type="tel" name="phone" pattern="^\\+?\\d{9,15}$" />
+        </label>
+        <label>الدولة
+          <select name="country" required>
+            <option value="">اختر</option>
+            <option value="YE">اليمن</option>
+            <option value="SA">السعودية</option>
+            <option value="EG">مصر</option>
+          </select>
+        </label>
+        <label>السيرة الذاتية
+          <textarea name="bio" rows="3"></textarea>
+        </label>
+        <div class="row">
+          <label class="checkbox">
+            <input type="checkbox" name="terms" required />
+            <span>أوافق على الشروط</span>
+          </label>
+        </div>
+        <div class="actions">
+          <button type="submit">حفظ</button>
+          <button type="reset" class="secondary">إعادة</button>
+        </div>
+      </form>
+
+      <form id="uploadForm" class="form-card">
+        <h3>نموذج رفع ملف</h3>
+        <label>اختر ملف
+          <input type="file" name="file" />
+        </label>
+        <div class="actions">
+          <button type="submit">رفع</button>
+        </div>
+        <p class="note">هذا مثال محلي، يمكن ربطه لاحقًا بـ Backend لاستلام الملفات.</p>
+      </form>
+    </section>
+
+    <!-- الصفحة: الجداول -->
+    <section id="view-table" class="view">
+      <h2>إدارة الجداول</h2>
+      <div class="table-actions">
+        <input type="text" id="itemName" placeholder="اسم العنصر" />
+        <input type="text" id="itemDesc" placeholder="الوصف" />
+        <button id="addItem">إضافة</button>
+      </div>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>الاسم</th>
+            <th>الوصف</th>
+            <th>إجراءات</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <!-- يمتلئ ديناميكيًا -->
+        </tbody>
+      </table>
+    </section>
+
+    <!-- الصفحة: تضمين خارجي -->
+    <section id="view-embed" class="view">
+      <h2>تضمين صفحات وروابط خارجية</h2>
+      <div class="panel">
+        <h3>تضمين صفحة خارجية عبر Iframe</h3>
+        <input type="text" id="embedUrl" placeholder="ضع رابط الصفحة (https://...)" />
+        <button id="embedPage">تضمين</button>
+        <div class="embed-box">
+          <iframe id="extFrame" src="" sandbox="allow-forms allow-scripts allow-same-origin"></iframe>
+        </div>
+        <p class="note">قد تمنع بعض المواقع التضمين عبر سياسات X-Frame-Options.</p>
+      </div>
+
+      <div class="panel">
+        <h3>روابط خارجية</h3>
+        <ul class="links">
+          <li><a href="https://developer.mozilla.org" target="_blank" rel="noopener">MDN Web Docs</a></li>
+          <li><a href="https://www.w3schools.com" target="_blank" rel="noopener">W3Schools</a></li>
+          <li><a href="https://youtube.com" target="_blank" rel="noopener">YouTube</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- الصفحة: عن الموقع -->
+    <section id="view-about" class="view">
+      <h2>عن المنصة</h2>
+      <p>نسخة تعليمية متقدمة تُظهر مهارات التنسيق، إدارة الجلسات، الوسائط، الجداول، والنماذج، مع فصل الملفات وربطها.</p>
+    </section>
+  </main>
+
+  <!-- نافذة تسجيل الدخول -->
+  <div id="loginModal" class="modal hidden">
+    <div class="modal-content">
+      <h3>تسجيل الدخول</h3>
+      <form id="loginForm">
+        <label>اسم المستخدم
+          <input type="text" name="username" required />
+        </label>
+        <label>كلمة المرور
+          <input type="password" name="password" required />
+        </label>
+        <div class="actions">
+          <button type="submit">دخول</button>
+          <button type="button" id="closeLogin" class="secondary">إغلاق</button>
+        </div>
+        <p class="note">يتم حفظ الجلسة محليًا (LocalStorage) .</p>
+      </form>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <small>© 2025 منصة الويب المتقدمة</small>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
